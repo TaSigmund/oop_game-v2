@@ -36,13 +36,19 @@
 * Begins game by selecting a random phrase and displaying it to user
 */
     startGame() {
+        /*the next three lines remove the overlay*/
         let startOverlay = document.getElementById('overlay');
         startOverlay.style.display = 'none';
+        /*the next line displays the placeholders for a new phrase*/
         this.activePhrase.addPhraseToDisplay();
+        /*the next two lines rest the hearts*/
         let tries = document.querySelectorAll('.tries');
-        tries.forEach(attempt => attempt.firstElementChild.src='images/liveHeart.png') //resets the hearts
+        tries.forEach(attempt => attempt.firstElementChild.src='images/liveHeart.png')
+        /*the next four lines make sure all keys can be clicked again and are no longer marked as wrong*/
         let keys = document.querySelectorAll('.key');
-        keys.forEach(key => key.disabled = false); //resets keys
+        keys.forEach(key => {   
+            key.disabled = false; 
+            key.className = "key"}); 
 };
 
 /**
@@ -68,9 +74,11 @@ gameOver(gameWon) {
         startOverlay.style.display = 'flex';
         this.missed = 0;
     if(gameWon) {
+        startOverlay.className = "win";
         gameOverMessage.textContent = 'Good Job!';
     }
     else {
+        startOverlay.className = "lose";
         gameOverMessage.textContent = 'Game Over - You lost!';
     }
 };
@@ -80,9 +88,10 @@ gameOver(gameWon) {
 * Removes a life from the scoreboard
 * Checks if player has remaining lives and ends game if player is out
 */
-    removeLife(letter) {
-        if (!this.activePhrase.phrase.includes(letter)) {//checks whether the letter exists
+    removeLife(button) {
+        if (!this.activePhrase.phrase.includes(button.textContent)) {//checks whether the letter exists
             this.missed += 1;
+            button.className = "key wrong"
             if (this.missed < 6) {
             document.querySelectorAll('.tries')[this.missed - 1].firstElementChild.src='images/lostHeart.png'; //changes the src attribute of the img tag
         } 
@@ -96,9 +105,9 @@ gameOver(gameWon) {
     handleInteraction(button){
         let letter = button.textContent;
         this.activePhrase.checkLetter(letter);
-        if (button.textContent === letter) {button.disabled = true} //disables onscreen keys that have already been pressed.
+        if (button.textContent === letter) {button.disabled = true; button.className = "key chosen"} //disables onscreen keys that have already been pressed.
         this.activePhrase.showMatchedLetter(letter);
-        this.removeLife(letter);
+        this.removeLife(button);
         if (this.checkForWin()) {setTimeout(()=>{this.gameOver(true)}, 1000)} //delays the new start screen by one second so the player can see the full sentence
         else if (this.missed > 5) {this.gameOver(false)} //shows the 'You lost!' start screen.
     };

@@ -47,7 +47,8 @@ checkLetter(letter){//this is the letter that has been pressed on the onscreen k
     let individualLetters = this.phrase.split(''); //these are the individual letters of the current phrase
     individualLetters.forEach(individualLetter => {
         if (letter === individualLetter) {return true}
-        else {return false};
+        else {
+            return false};
     })
     }
 }
