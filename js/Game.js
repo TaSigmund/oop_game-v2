@@ -105,10 +105,11 @@ gameOver(gameWon) {
     handleInteraction(button){
         let letter = button.textContent;
         this.activePhrase.checkLetter(letter);
-        if (button.textContent === letter) {button.disabled = true; button.className = "key chosen"} //disables onscreen keys that have already been pressed.
+        //if (button.textContent === letter) {
+            button.disabled = true; button.className = "key chosen" //disables onscreen keys that have already been pressed.
         this.activePhrase.showMatchedLetter(letter);
         this.removeLife(button);
         if (this.checkForWin()) {setTimeout(()=>{this.gameOver(true)}, 1000)} //delays the new start screen by one second so the player can see the full sentence
-        else if (this.missed > 5) {this.gameOver(false)} //shows the 'You lost!' start screen.
+        else if (this.missed >= 5) {this.gameOver(false)} //shows the 'You lost!' start screen.
     };
  }
