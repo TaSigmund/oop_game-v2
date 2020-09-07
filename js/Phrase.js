@@ -11,44 +11,42 @@
 */
     addPhraseToDisplay() {
         let individualLetters = this.phrase.split("");
-    individualLetters.forEach(letter => {
-        let listElement = document.createElement('li');
-        listElement.textContent = `${letter}`;
-        if(/^[a-zA-Z]$/.test(letter)){
-        listElement.className = `hide letter ${letter}`;
-        }
-        else {
-        listElement.className = `space`;
-        }
-        let phraseUl = document.getElementById('phrase');
-        phraseUl.appendChild(listElement);
-    })
-    };
+        individualLetters.forEach(letter => {
+            let listElement = document.createElement('li');
+            listElement.textContent = `${letter}`;
+            if(/^[a-zA-Z]$/.test(letter)){ //makes shure it is a letter from a-z
+            listElement.className = `hide letter ${letter}`; //makes sure the letter is replaced by a placeholder initially
+            }
+            else {
+            listElement.className = `space`; //makes sure a space in the phrase is not a placeholder
+            }
+            let phraseUl = document.getElementById('phrase');
+            phraseUl.appendChild(listElement);
+        })
+    }
 
     /**
 * Displays passed letter on screen after a match is found
 * @param (string) letter - Letter to display
 */
-showMatchedLetter(letter) {
-    let individualPlaceholders = document.querySelectorAll('.hide');
-    individualPlaceholders.forEach(individualPlaceholder => {
-       if (individualPlaceholder.textContent === letter){
-            individualPlaceholder.className = `show letter`}
-        }
-    )
-};
+    showMatchedLetter(letter) {
+        let individualPlaceholders = document.querySelectorAll('.hide');
+        individualPlaceholders.forEach(individualPlaceholder => {
+                if (individualPlaceholder.textContent === letter){ //selects the correct letter
+                individualPlaceholder.className = `show letter` //reveals it
+                }
+            })
+    }
 
 /**
 * Checks if passed letter is in phrase
 * @param (letter) letter - Letter to check
 */
 
-checkLetter(letter){//this is the letter that has been pressed on the onscreen keyboard
-    let individualLetters = this.phrase.split(''); //these are the individual letters of the current phrase
-    individualLetters.forEach(individualLetter => {
-        if (letter === individualLetter) {return true}
-        else {
-            return false};
-    })
+    checkLetter(letter){
+        if (this.phrase.includes(letter))
+            {return true} 
+        else 
+            {return false} 
     }
 }
