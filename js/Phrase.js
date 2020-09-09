@@ -10,9 +10,9 @@
 * Display phrase on game board
 */
     addPhraseToDisplay() {
-        let individualLetters = this.phrase.split("");
+        const individualLetters = this.phrase.split("");
         individualLetters.forEach(letter => {
-            let listElement = document.createElement('li');
+            const listElement = document.createElement('li');
             listElement.textContent = `${letter}`;
             if(/^[a-zA-Z]$/.test(letter)){ //makes shure it is a letter from a-z
             listElement.className = `hide letter ${letter}`; //makes sure the letter is replaced by a placeholder initially
@@ -20,7 +20,7 @@
             else {
             listElement.className = `space`; //makes sure a space in the phrase is not a placeholder
             }
-            let phraseUl = document.getElementById('phrase');
+            const phraseUl = document.getElementById('phrase');
             phraseUl.appendChild(listElement);
         })
     }
@@ -30,7 +30,7 @@
 * @param (string) letter - Letter to display
 */
     showMatchedLetter(letter) {
-        let individualPlaceholders = document.querySelectorAll('.hide');
+        const individualPlaceholders = document.querySelectorAll('.hide');
         individualPlaceholders.forEach(individualPlaceholder => {
                 if (individualPlaceholder.textContent === letter){ //selects the correct letter
                 individualPlaceholder.className = `show letter` //reveals it
